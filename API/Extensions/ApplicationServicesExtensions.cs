@@ -13,8 +13,8 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            //services.AddEndpointsApiExplorer();//moved to swagger extension class
+            //services.AddSwaggerGen();
             services.AddDbContext<StoreContext>(options => options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<IConnectionMultiplexer>(c =>
