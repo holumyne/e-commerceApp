@@ -7,12 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\NewFolder\**" />
     <Compile Remove="Specification\**" />
+    <EmbeddedResource Remove="Entities\NewFolder\**" />
     <EmbeddedResource Remove="Specification\**" />
+    <None Remove="Entities\NewFolder\**" />
     <None Remove="Specification\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
