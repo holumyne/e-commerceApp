@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\NewFolder\**" />
     <Compile Remove="Specification\**" />
-    <EmbeddedResource Remove="Entities\NewFolder\**" />
     <EmbeddedResource Remove="Specification\**" />
-    <None Remove="Entities\NewFolder\**" />
     <None Remove="Specification\**" />
   </ItemGroup>
 

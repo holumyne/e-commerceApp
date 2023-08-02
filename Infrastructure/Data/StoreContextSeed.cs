@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.OrderAggregate;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,6 +44,15 @@ namespace Infrastructure.Data
                     return;
 
                 context.ProductBrands.AddRange(brands);
+            }
+            if (!context.DeliveryMethods.Any())
+            {
+                var deliveryData = File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+                var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+                if (methods == null)
+                    return;
+
+                context.DeliveryMethods.AddRange(methods);
             }
 
             if (context.ChangeTracker.HasChanges())  //this means that if there is any changes from the data, save the changes in the db.
