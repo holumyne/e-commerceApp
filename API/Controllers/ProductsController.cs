@@ -26,7 +26,7 @@ namespace API.Controllers
             _productBrandRepo = productBrandRepo;
         }
 
-        // [Cached(600)]
+        [Cached(600)] //600 seconds the second for the cache to last
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams productParams)//Becos we are sending our parameters as a query string, we have to add[FromQuery] unless the Api controller will recognise the parameter as object.
         {
@@ -41,7 +41,7 @@ namespace API.Controllers
             return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
         }
 
-        // [Cached(600)]
+        [Cached(600)]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]  //for swagger documentation
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)] //for swagger documentation
@@ -57,14 +57,14 @@ namespace API.Controllers
             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
 
-        //[Cached(600)]
+        [Cached(600)]
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
             return Ok(await _productBrandRepo.ListAllAsync());
         }
 
-        // [Cached(600)]
+        [Cached(600)]
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductTypes()
         {

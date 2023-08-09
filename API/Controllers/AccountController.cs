@@ -94,11 +94,11 @@ namespace API.Controllers
             return await _userManager.FindByEmailAsync(email) != null;
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpGet("address")]
         public async Task<ActionResult<AddressDto>> GetUserAddress()
         {
-            var user = await _userManager.FindByUserByClaimsPrincipleWithAddressAsync(User);
+            var user = await _userManager.FindUserByClaimsPrincipleWithAddressAsync(User);
 
             return _mapper.Map<Address, AddressDto>(user.Address);
 
@@ -108,7 +108,7 @@ namespace API.Controllers
         [HttpPut("address")]
         public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
         {
-            var user = await _userManager.FindByUserByClaimsPrincipleWithAddressAsync(HttpContext.User);
+            var user = await _userManager.FindUserByClaimsPrincipleWithAddressAsync(User);
 
             user.Address = _mapper.Map<AddressDto, Address>(address);
 
