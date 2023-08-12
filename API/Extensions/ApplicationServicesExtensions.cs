@@ -15,7 +15,8 @@ namespace API.Extensions
         {
             //services.AddEndpointsApiExplorer();//moved to swagger extension class
             //services.AddSwaggerGen();
-            services.AddDbContext<StoreContext>(options => options.UseSqlite(config.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<StoreContext>(options => options.UseSqlite(config.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<StoreContext>(options => options.UseNpgsql(config.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {

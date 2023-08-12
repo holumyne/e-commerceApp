@@ -3,6 +3,7 @@ using Core.Entities.OrderAggregate;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -12,12 +13,13 @@ namespace Infrastructure.Data
     {
         public static async Task SeedAsync(StoreContext context)
         {
-            // var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); //has some line of code included in Infrastructure.csproj
 
             if (!context.Products.Any())
             {
 
-                var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
+                //var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");//We cant hv this type of file path in production. This path is for your local system
+                var productsData = File.ReadAllText(path + @"/Data/SeedData/products.json");
 
                 var products = JsonSerializer.Deserialize<List<Product>>(productsData);
                 if (products == null)
@@ -28,7 +30,7 @@ namespace Infrastructure.Data
 
             if (!context.ProductTypes.Any())
             {
-                var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
+                var typesData = File.ReadAllText(path + @"/Data/SeedData/types.json");
                 var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
                 if (types == null)
                     return;
@@ -38,7 +40,7 @@ namespace Infrastructure.Data
 
             if (!context.ProductBrands.Any())
             {
-                var brandsData = File.ReadAllText("../Infrastructure/Data/SeedData/brands.json");
+                var brandsData = File.ReadAllText(path + @"/Data/SeedData/brands.json");
                 var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
                 if (brands == null)
                     return;
@@ -47,7 +49,7 @@ namespace Infrastructure.Data
             }
             if (!context.DeliveryMethods.Any())
             {
-                var deliveryData = File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+                var deliveryData = File.ReadAllText(path + @"/Data/SeedData/delivery.json");
                 var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
                 if (methods == null)
                     return;

@@ -5,6 +5,7 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,13 @@ app.UseSwaggerDocumentation();
 //app.UseSwagger();
 //app.UseSwaggerUI(); //moved to swagger extension class
 
-app.UseStaticFiles();
+app.UseStaticFiles(); // this takes care of the wwwroot which we need for our angular app
+app.UseStaticFiles(new StaticFileOptions  //this will show the new path of the image static file.
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Content")),
+    RequestPath = "/Content"
+});
 
 app.UseCors("CorsPolicy");
 
@@ -33,6 +40,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapFallbackToController("Index", "Fallback"); //this will tell our API what to do for route it doesn't know about. This means fallback to an index method inside Fallback controller
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
